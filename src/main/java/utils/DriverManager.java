@@ -96,7 +96,7 @@ public class DriverManager {
         try {
             Files.createDirectories(Paths.get(SCREENSHOTS_DIR));
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to create screenshots directory: " + e.getMessage(), e);
         }
 
         // Generate timestamp for unique file name
@@ -112,8 +112,7 @@ public class DriverManager {
             System.out.println("Screenshot saved: " + destPath.toAbsolutePath());
             return destPath.toString();
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Failed to save screenshot: " + e.getMessage(), e);
         }
     }
 

@@ -197,11 +197,8 @@ public class RegistrationPage {
         // Scroll to submit button to make it visible
         ((org.openqa.selenium.JavascriptExecutor) driver)
             .executeScript("arguments[0].scrollIntoView(true);", submitButton);
-        try {
-            Thread.sleep(500); // Brief pause after scroll
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        // Wait for scroll animation to complete
+        wait.until(ExpectedConditions.elementToBeClickable(submitButton));
         submitButton.click();
     }
 
