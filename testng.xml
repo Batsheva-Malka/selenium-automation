@@ -3,7 +3,7 @@
 <suite name="Selenium Suite">
     <test name="Selenium Test">
         <classes>
-            <class name="org.example.AppTest"/>
+            <class name="tests.AppTest"/>
         </classes>
     </test>
 </suite>
