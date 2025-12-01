@@ -84,73 +84,78 @@
 // * 4. Look for "test-output" folder for HTML reports
 // */
 //
-package  tests;
+package tests;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.openqa.selenium.chrome.ChromeOptions;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
-
-
-import pages.HomePage;
-import pages.ProductPage;
 
 public class AppTest {
     private WebDriver driver;
-    private HomePage homePage;
 
-    //
     @BeforeMethod
     public void setUp() {
-        // Setup ChromeDriver automatically
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        homePage = new HomePage(driver);
         driver.get("https://www.bose.com/home");
     }
-    // Set up the WebDriver (Chrome in this case) and initialize the HomePage
-//    @BeforeClass
-//    public void setUp() {
-//        // Set path for your ChromeDriver (make sure to download it and place it in your project directory)
-//       // System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
-//
-//        // Initialize the WebDriver (with options if needed)
-//        ChromeOptions options = new ChromeOptions();
-//        options.addArguments("--start-maximized");  // Open browser in maximized window
-//        driver = new ChromeDriver(options);
-//
-//        // Initialize HomePage object
-//        homePage = new HomePage(driver);
-//
-//        // Navigate to the Home page
-//        driver.get("https://www.bose.com/home");
-//    }
 
     @Test
-    public void testAddToCartFromHeadphonesCategory() {
-        // Navigate to the 'Headphones' category and select a product
-        ProductPage productPage = homePage.selectProductFromCategory("Headphones", 0);  // Choose first product in the Headphones category
-
-        // Add the selected product to the cart
-        productPage.addToCart();
-
-        // Add a verification here to ensure the product was added successfully (can be based on cart count or a confirmation message)
-        // For example, check if the cart count has increased by 1
-//        String expectedText = "The product has been added to your cart.";  // Text you expect after adding product
-//        boolean isProductAdded = driver.getPageSource().contains(expectedText);
-//
-//        // Verify that the product was added to the cart successfully
-//        Assert.assertTrue(isProductAdded, "The product was not added to the cart!");
+    public void testFindShopMenu() throws InterruptedException {
+        System.out.println("=== TEST: Finding Shop Menu ===");
+        
+        // Wait a bit for page to load
+        Thread.sleep(3000);
+        
+        // Try different locators
+        System.out.println("Trying By.id('Shop')...");
+        try {
+            WebElement shopById = driver.findElement(By.id("Shop"));
+            System.out.println("✓ Found Shop by ID: " + shopById.getText());
+            shopById.click();
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            System.out.println("✗ Could not find Shop by ID");
+        }
+        
+        // Check for category navigation
+        System.out.println("\nLooking for category items...");
+        String[] selectors = {
+            ".secondary-navigation__button",
+            "nav a",
+            ".category-link",
+            "[role='navigation'] a",
+            ".navigation a"
+        };
+        
+        for (String selector : selectors) {
+            try {
+                List<WebElement> elements = driver.findElements(By.cssSelector(selector));
+                if (!elements.isEmpty()) {
+                    System.out.println("✓ Found " + elements.size() + " elements with: " + selector);
+                    for (int i = 0; i < Math.min(5, elements.size()); i++) {
+                        System.out.println("  - " + elements.get(i).getText());
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("✗ No elements with: " + selector);
+            }
+        }
     }
 
-    // Clean up after tests
-    @org.testng.annotations.AfterClass
+    @AfterMethod
     public void tearDown() {
-        // Close the browser after tests are completed
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }

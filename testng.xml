@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Selenium Suite">
-    <test name="Selenium Test">
+<suite name="Bose E-Commerce Test Suite">
+    
+    <test name="Shopping Cart Tests">
         <classes>
-            <class name="tests.AppTest"/>
+            <class name="tests.ShoppingCartTest"/>
         </classes>
     </test>
+    
 </suite>
