@@ -15,7 +15,7 @@ public  class ProductPage {
     private  WebDriverWait wait;
     private int productIndex;
     private By productCards = By.cssSelector(".product-tile-content");
-    private By addToCartButton = By.xpath("//button[text()='ADD TO CART']");
+    private By addToCartButton = By.cssSelector("button.add-to-cart");
 
     public ProductPage(WebDriver driver, int productIndex) {
         this.driver = driver;
@@ -26,8 +26,13 @@ public  class ProductPage {
     public void addToCart() {
         List<WebElement> products = driver.findElements(productCards);
         WebElement product = products.get(productIndex);
-
-        WebElement addButton = product.findElement(addToCartButton);
+        try {
+            Thread.sleep(2000); // Sleeps for 2 seconds
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }// Sleeps for 2000 milliseconds (2 seconds)
+        // Wait for 2 seconds to ensure the product is fully loaded
+        WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(product.findElement(addToCartButton)));
         addButton.click();
 
         // Optionally wait for the button text to change (or another confirmation)

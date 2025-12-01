@@ -13,7 +13,7 @@ public class HomePage   {
     private  WebDriverWait wait;
 
     private By shopMenu = By.id("Shop");
-    private By categoryItems = By.cssSelector("div.dropdown-menu");
+    private By categoryItems = By.cssSelector(".secondary-navigation__button");
     // Constructor
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -23,10 +23,18 @@ public class HomePage   {
     public void openShopMenu() {
         WebElement shopButton = wait.until(ExpectedConditions.elementToBeClickable(shopMenu));
         shopButton.click();
+        // Optionally, wait for the menu to appear
+        try {
+            Thread.sleep(9000); // Sleeps for 2 seconds
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        wait.until(ExpectedConditions.visibilityOfElementLocated(categoryItems));
+
     }
 
     public ProductPage selectProductFromCategory(String categoryName, int productIndex) {
-        openShopMenu();  // Open the shop menu first
+        //openShopMenu();  // Open the shop menu first
 
         // Find the category by its name and click it
         List<WebElement> categories = driver.findElements(categoryItems);
