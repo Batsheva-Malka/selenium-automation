@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Bose E-Commerce Test Suite">
+<suite name="Bose E-Commerce Test Suite" verbose="1">
     
     <test name="Shopping Cart Tests">
         <classes>
             <class name="tests.ShoppingCartTest"/>
+        </classes>
+    </test>
+    
+    <test name="Checkout Form Validation Tests">
+        <classes>
+            <class name="tests.CheckoutFormTest"/>
         </classes>
     </test>
     

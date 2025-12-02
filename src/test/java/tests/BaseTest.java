@@ -22,9 +22,9 @@ public class BaseTest {
     
     @AfterSuite
     public void tearDownSuite() {
-        if (driver != null) {
-            driver.quit();
-            System.out.println("✓ Browser closed after entire test suite");
-        }
+        // if (driver != null) {
+        //     driver.quit();
+        //     System.out.println("✓ Browser closed after entire test suite");
+        // }
     }
 }
