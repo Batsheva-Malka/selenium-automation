@@ -19,20 +19,23 @@ public class CategoryPage extends BasePage {
     
     public CategoryPage addProductToCartByIndex(int productIndex) {
         List<WebElement> products = driver.findElements(productCards);
-        WebElement product = products.get(productIndex);
-        
-        // YOUR ORIGINAL WAIT
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        
-        WebElement addButton = wait.until(
-            ExpectedConditions.elementToBeClickable(product.findElement(addToCartButton))
-        );
-        addButton.click();
-        
+ for (int i = productIndex; i < products.size(); i++) {
+            WebElement product = products.get(i);
+            
+            try {
+                WebElement addButton = wait.until(
+                    ExpectedConditions.elementToBeClickable(product.findElement(addToCartButton))
+                );
+                
+                String buttonText = addButton.getText().trim();
+                if (buttonText.equalsIgnoreCase("Add to Cart")) {
+                    addButton.click();
+                    break;  // Success, exit loop
+                }
+            } catch (Exception e) {
+                System.out.println("⚠ Could not add product " + i + ", trying next...");
+            }
+        }        
         return this;
     }
 }

@@ -57,7 +57,7 @@ public class ProductPage extends BasePage {
     }
 
     // Add product to cart - returns CartPage for verification
-    public CartPage addToCart() {
+    public ProductPage addToCart() {
         List<WebElement> products = findElements(productCards);
         WebElement product = products.get(productIndex);
 
@@ -65,7 +65,7 @@ public class ProductPage extends BasePage {
         WebElement addButton = product.findElement(addToCartButton);
         wait.until(driver -> addButton.isDisplayed());
         addButton.click();
-        return new CartPage(driver);
+        return this;
     }
 
     // Alternative: Stay on product page after adding
