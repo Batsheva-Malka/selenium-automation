@@ -36,3 +36,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Test Reports and Screenshots ###
+test-reports/
+screenshots/
