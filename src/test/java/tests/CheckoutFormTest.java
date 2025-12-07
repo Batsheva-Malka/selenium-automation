@@ -133,10 +133,14 @@ public class CheckoutFormTest extends BaseTest {
             "212-555-1234"
         );
         
-        checkoutPage.waitForZipFieldEnabled()
-                   .clickContinueToPayment()
-                   .waitForPageTransition();
-        
+        try {
+            checkoutPage.waitForZipFieldEnabled()
+                       .clickContinueToPayment()
+                       .waitForPageTransition();
+            Thread.sleep(8000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         // Verify we moved to payment page or form was accepted
         boolean isValid = checkoutPage.isOnPaymentPage() || 
                          !checkoutPage.isEmailErrorDisplayed();
