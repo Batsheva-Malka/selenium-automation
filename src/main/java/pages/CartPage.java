@@ -108,14 +108,9 @@ public class CartPage extends BasePage {
         // Use JavaScript click to avoid interception by header elements
         WebElement checkoutBtn = findElement(checkoutButton);
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", checkoutBtn);        // try {
-        //     Thread.sleep(2000); // Wait for page change
-        // } catch (InterruptedException e) {
-        //     e.printStackTrace();
-        // }
+       
 
         return this;
     }
-    // public boolean isConfirmationMessageDisplayed() {
-    //         return isElementDisplayed(confirmationMessage);
-    // }
+   
 }
